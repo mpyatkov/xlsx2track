@@ -5,27 +5,6 @@ library(dplyr)
 library(purrr)
 library(stringr)
 
-#Define UI
-# ui <- fluidPage(
-#   titlePanel("Convert XLSX to BED Files"),
-#   sidebarLayout(
-#     sidebarPanel(
-#       fileInput("fileInput", "Upload XLSX Files",
-#                 multiple = TRUE,
-#                 accept = c(".xlsx")),
-#       helpText(
-#         "Note: The uploaded XLSX files must contain at least the following columns: ",
-#         strong("'chrom', 'start', and 'end'."),
-#         "Additional columns will be ignored."
-#       ),
-#       actionButton("process", "Convert to BED")
-#     ),
-#     mainPanel(
-#       uiOutput("downloadUI")
-#     )
-#   )
-# )
-
 
 file_validation <- function(file_path) {
   
@@ -49,7 +28,7 @@ file_validation <- function(file_path) {
   })
  
   missing_columns_header <- setdiff(c("name", "description"), colnames(params))
-  missing_columns_data <- setdiff(c("chrom", "start", "end", "region_id", "strand", "color"), colnames(data))
+  missing_columns_data <- setdiff(c("chr", "start", "end", "region_id", "strand", "color"), colnames(data))
   
   if (length(missing_columns_header) > 0) {
     output_list$status <- FALSE
@@ -93,7 +72,7 @@ ui <- fluidPage(
       helpText(
         "Upload one or more XLSX files for conversion. Each file must follow format and instructions for UCSC browser upload in example.xlsx file:",
         # tags$ul(
-        #   tags$li(strong("'chrom'")),
+        #   tags$li(strong("'chr'")),
         #   tags$li(strong("'start'")),
         #   tags$li(strong("'end'"))
         # ),
